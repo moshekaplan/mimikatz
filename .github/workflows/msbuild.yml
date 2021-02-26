@@ -61,6 +61,9 @@ jobs:
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 ${{env.SOLUTION_FILE_PATH}}
 
   build_vs2019_win32:
+    strategy:
+      matrix:
+        platform: [Win32, x64]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -70,16 +73,4 @@ jobs:
         vs-version: '[16.0,17.0)'
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
-
-  build_vs2019_x64:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1
-      with:
-        vs-version: '[16.0,17.0)'
-    - name: Build
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=${{matrix.platform}} ${{env.SOLUTION_FILE_PATH}}
