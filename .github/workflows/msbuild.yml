@@ -19,3 +19,10 @@ jobs:
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=${{matrix.platform}} ${{env.SOLUTION_FILE_PATH}}
+    - name: Zip build file
+      run: 7z.exe"  a -t"zip" ${{matrix.platform}} ${{matrix.platform}}
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage-report
+        path: ${{matrix.platform}}.zip
