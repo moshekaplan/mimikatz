@@ -55,12 +55,12 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
       with:
-        vs-version: '[15.0,16.0)'
+        vs-version: 'vs2017'
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 ${{env.SOLUTION_FILE_PATH}}
 
-  build_vs2019_win32:
+  build_vs2019:
     strategy:
       matrix:
         platform: [Win32, x64]
@@ -70,7 +70,7 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
       with:
-        vs-version: '[16.0,17.0)'
+        vs-version: 'vs2019'
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=${{matrix.platform}} ${{env.SOLUTION_FILE_PATH}}
