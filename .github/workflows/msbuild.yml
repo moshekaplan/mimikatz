@@ -3,7 +3,6 @@ name: MSBuild
 on: [push]
 
 env:
-  # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
   BUILD_CONFIGURATION: Release
 jobs:
@@ -24,4 +23,5 @@ jobs:
     - name: Archive code coverage results
       uses: actions/upload-artifact@v2
       with:
+        name: ${{matrix.platform}}
         path: ${{matrix.platform}}.zip
