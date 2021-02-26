@@ -12,48 +12,36 @@ env:
   BUILD_CONFIGURATION: Release
 
 jobs:
-  build_x64:
+  build_latest_x64:
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v2
-
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
-
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 -target:mimikatz,mimilib ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 ${{env.SOLUTION_FILE_PATH}}
 
-  build_win32:
+  build_latest_win32:
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v2
-
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
-
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=Win32 -target:mimikatz,mimilib ${{env.SOLUTION_FILE_PATH}}
-
-
-  build_win32_drv:
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
+      
+  build_vs2013_win32:
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v2
-
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1
-
+      with:
+        vs-version: '[12.0,13.0)'
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=Win32 -target:mimidrv ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=Win32 ${{env.SOLUTION_FILE_PATH}}
+      
+      
